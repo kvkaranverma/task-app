@@ -18,5 +18,11 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
     db.collection('users').insertOne({
         name: 'Karan Verma',
         age: 23
+    }, (error, result) => {
+        if(error) {
+            console.log('Unable to insert user')
+        }
+
+        console.log(result.ops)
     })
 })
