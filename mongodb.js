@@ -32,11 +32,11 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
     // })
 
     // Selecting multiple documents
-    db.collection('users').find({ age: 22 }).toArray((error, users) => {    // find returns a cursor
+    db.collection('users').find({ age: 22 }).count((error, count) => {    // find returns a cursor
         if(error) {
-            return console.log('Unable to select users')
+            return console.log('Unable to detect count')
         }
 
-        console.log(users)
+        console.log(count)
     })
 })
