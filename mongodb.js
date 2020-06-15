@@ -21,10 +21,21 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     const db = client.db(databaseName)
 
-    db.collection('users').deleteMany({
+    // Deleting multiple documents
+    // db.collection('users').deleteMany({
+    //     age: 23
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
+
+    // Deleting single document
+
+    db.collection('users').deleteOne({
         age: 23
     }).then((result) => {
-        console.log(result)
+        console.log(result.deletedCount)
     }).catch((error) => {
         console.log(error)
     })
