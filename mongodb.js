@@ -8,14 +8,11 @@
 // //Creating own objectID
 // const ObjectId = mongodb.ObjectID
 
-const { MongoClient, ObjectId, ObjectID } = require('mongodb')
+const { MongoClient } = require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
 
-const id = new ObjectID() // To generate a new ID
-console.log(id.id)
-console.log(id.toHexString().length)
 
 MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client) => {
     if(error) {
@@ -24,59 +21,13 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     const db = client.db(databaseName)
 
-    // Inserting a single user
+    // Selecting a single document
 
-    // db.collection('users').insertOne({
-    //     _id: id,
-    //     name: 'Damon',
-    //     age: 27
-    // }, (error, result) => {
-    //     if(error) {
-    //        return console.log('Unable to insert user')
-    //     }
+    db.collection('users').findOne({ name: 'Jen' }, (error, user) => {  // user is the actual document it returns
+        if(error) {
+            return console.log('Unable to fetch')
+        }
 
-    //     console.log(result.ops)
-    // })
-
-    // Inserting multiple users
-
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'Elena',
-    //         age: 22
-    //     },
-    //     {
-    //         name: 'Jen',
-    //         age: 23
-    //     }
-    // ], (error, result) => {
-    //     if(error) {
-    //         return console.log('Unable to insert documents!')
-    //     }
-
-    //     console.log(result.ops)
-    // })
-
-    // db.collection('tasks').insertMany([
-    //     {
-    //         description: 'This is description of the task one',
-    //         completed: true
-    //     },
-    //     {
-    //         description: 'This is description of the task two',
-    //         completed: false
-    //     },
-    //     {
-    //         description: 'This is description of the task three',
-    //         completed: true
-    //     }
-    // ], (error, result) => {
-    //     if(error) {
-    //         return console.log('Unable to insert the document')
-    //     }
-
-    //     console.log(result.ops)
-    // })
-
-
+        console.log(user)
+    })
 })
