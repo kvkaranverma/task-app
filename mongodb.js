@@ -23,11 +23,20 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     // Selecting a single document
 
-    db.collection('users').findOne({ _id: new ObjectID('5ee778c3f0107c215c5a89c5') }, (error, user) => {  // user is the actual document it returns
+    // db.collection('users').findOne({ _id: new ObjectID('5ee778c3f0107c215c5a89c5') }, (error, user) => {  // user is the actual document it returns
+    //     if(error) {
+    //         return console.log('Unable to fetch')
+    //     }
+
+    //     console.log(user)
+    // })
+
+    // Selecting multiple documents
+    db.collection('users').find({ age: 22 }).toArray((error, users) => {    // find returns a cursor
         if(error) {
-            return console.log('Unable to fetch')
+            return console.log('Unable to select users')
         }
 
-        console.log(user)
+        console.log(users)
     })
 })
