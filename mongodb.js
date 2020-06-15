@@ -23,14 +23,28 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     // Updating document
 
-    db.collection('users').updateOne({ 
-            _id: new ObjectID('5ee7738127871a3ec094da66') 
-    },{
-        $inc: {
-            age: 1
+    // db.collection('users').updateOne({ 
+    //         _id: new ObjectID('5ee7738127871a3ec094da66') 
+    // },{
+    //     $inc: {
+    //         age: 1
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
+
+    // Updating multiple documents
+
+    db.collection('tasks').updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
         }
     }).then((result) => {
-        console.log(result)
+        console.log(result.modifiedCount)
     }).catch((error) => {
         console.log(error)
     })
