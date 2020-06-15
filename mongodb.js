@@ -30,18 +30,39 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     // Inserting multiple users
 
-    db.collection('users').insertMany([
+    // db.collection('users').insertMany([
+    //     {
+    //         name: 'Elena',
+    //         age: 22
+    //     },
+    //     {
+    //         name: 'Jen',
+    //         age: 23
+    //     }
+    // ], (error, result) => {
+    //     if(error) {
+    //         return console.log('Unable to insert documents!')
+    //     }
+
+    //     console.log(result.ops)
+    // })
+
+    db.collection('tasks').insertMany([
         {
-            name: 'Elena',
-            age: 22
+            description: 'This is description of the task one',
+            completed: true
         },
         {
-            name: 'Jen',
-            age: 23
+            description: 'This is description of the task two',
+            completed: false
+        },
+        {
+            description: 'This is description of the task three',
+            completed: true
         }
     ], (error, result) => {
         if(error) {
-            return console.log('Unable to insert documents!')
+            return console.log('Unable to insert the document')
         }
 
         console.log(result.ops)
