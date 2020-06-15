@@ -21,30 +21,17 @@ MongoClient.connect(connectionURL, { useUnifiedTopology: true }, (error, client)
 
     const db = client.db(databaseName)
 
-    // Selecting a single document
+    // Updating document
 
-    // db.collection('users').findOne({ _id: new ObjectID('5ee778c3f0107c215c5a89c5') }, (error, user) => {  // user is the actual document it returns
-    //     if(error) {
-    //         return console.log('Unable to fetch')
-    //     }
-
-    //     console.log(user)
-    // })
-
-    // Selecting multiple documents
-    // db.collection('users').find({ age: 22 }).toArray((error, users) => {    // find returns a cursor
-    //     if(error) {
-    //         return console.log('Unable to select users')
-    //     }
-
-    //     console.log(users)
-    // })
-
-    db.collection('tasks').find({ completed: true }).toArray((error, tasks) => {
-        if(error) {
-            return console.log('Unable to feftch users who have completed their task')
+    db.collection('users').updateOne({ 
+            _id: new ObjectID('5ee7738127871a3ec094da66') 
+    },{
+        $set: {
+            name: 'Jeene'
         }
-        
-        console.log(tasks)
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
     })
 })
