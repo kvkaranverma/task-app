@@ -34,7 +34,7 @@ app.get("/user/:id", (req, res) => {
         if(!user) {
             return res.status(404).send()
         }
-        res.send(user)
+        res.status(201).send(user)
 
     }).catch((error) => {
         res.status(500).send()
@@ -48,6 +48,24 @@ app.post('/tasks', (req, res) => {
         res.status(201).send(task)
     }).catch((error) => {
         res.status(400).send(error)
+    })
+})
+
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.status(201).send(tasks)
+    }).catch((error) => {
+        res.status(500).send(error)
+    })
+})
+
+app.get('/task/:id', (req, res) => {
+    const _id = req.params.id
+
+    Task.findById(_id).then(task => {
+        res.status(201).send(task)
+    }).catch(error => {
+        res.status(500).send(error)
     })
 })
 
