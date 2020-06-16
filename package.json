@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "mongodb": "^3.5.9"
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.19"
   },
   "devDependencies": {},
   "scripts": {
