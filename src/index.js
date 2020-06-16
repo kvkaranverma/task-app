@@ -83,6 +83,53 @@ app.get('/task/:id', async (req, res) => {
     }
 })
 
+app.patch('/user/:id', async (req, res) => {
+    const id = req.params.id
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'age', 'password']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if(!isValidOperation) {
+        return res.status(400).send({error: 'Invalid updates'})
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+        if(!user) {
+            return res.status(404).send()
+        }
+        res.send(user)
+    }
+    catch(error) {
+        res.status(400).send(error)
+    }
+
+})
+
+app.patch('/task/:id', async (req, res) => {
+    const id = req.params.id
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ["description", "completed"]
+    const isValidOperation = updates.every(update => allowedUpdates.includes(update))
+
+    if(!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid udpdates' })
+    }
+
+    try {
+        const task = await Task.findByIdAndUpdate(id, req.body, {new: true, runValidators: true})
+
+        if(!task) {
+            return status(404).send()
+        }
+        res.send(task)
+    }
+    catch(error) {
+        res.status(400).send(error)
+    }
+})
+
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
