@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const auth = require('../middleware/auth')
 
 router.get('/test', (req, res) => {
     res.send('From a new file')
@@ -34,15 +35,8 @@ router.post('/user/login', async (req, res) => {
     }
 })
 
-router.get("/users", async (req, res) => {
-
-    try {
-        const users = await User.find({})
-        res.status(201).send(users)
-    }
-    catch(error) {
-        res.status(500).send(error)
-    }
+router.get("/users/me", auth, async (req, res) => {
+    res.send(req.user)
 })
 
 router.get("/user/:id", async (req, res) => {
