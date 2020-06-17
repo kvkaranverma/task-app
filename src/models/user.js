@@ -48,6 +48,14 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+// Virtual property: it is not actual data, that is stored in the database, but it's a relationship b/w two entities.
+// Example: here relationship b/w User and Task
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'assignee'
+})
+
 // instance methods, as they work on instance of model
 userSchema.methods.generateAuthToken = async function() {
     const user = this
