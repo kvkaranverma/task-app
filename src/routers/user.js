@@ -99,6 +99,22 @@ router.patch('/user/me', auth, async (req, res) => {
 
 })
 
+router.delete('/user/me', auth, async (req, res) => {
+    try {
+        // const user = await User.findByIdAndDelete(req.user._id)
+
+        // if(!user) {
+        //     return res.status(404).send()
+        // }
+
+        await req.user.remove()
+        res.send(req.user)
+    }
+    catch(error){
+        res.status(500).send()
+    }
+})
+
 router.post('/user/me/avatar', auth, upload.single('avatar'), async (req, res) => {
     req.user.avatar = req.file.buffer
     await req.user.save()
@@ -113,19 +129,19 @@ router.delete('/user/me/avatar', auth, async (req, res) => {
     res.send()
 })
 
-router.delete('/user/me', auth, async (req, res) => {
+router.get('/user/:id/avatar', async (req, res) => {
     try {
-        // const user = await User.findByIdAndDelete(req.user._id)
+        const user = await User.findById(req.params.id)
 
-        // if(!user) {
-        //     return res.status(404).send()
-        // }
+        if(!user || !user.avatar) {
+            throw new Error()
+        }
 
-        await req.user.remove()
-        res.send(req.user)
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
     }
-    catch(error){
-        res.status(500).send()
+    catch(error) {
+        res.status(404).send()
     }
 })
 
