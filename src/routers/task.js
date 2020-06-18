@@ -23,6 +23,11 @@ router.post('/tasks', auth, async (req, res) => {
 })
 
 router.get('/tasks', auth, async (req, res) => {
+    const match = {}
+
+    if(req.query.completed) {
+        match.completed = req.query.completed === 'true'
+    }
 
     try {
         //const tasks = await Task.find({ assignee: req.user._id })
@@ -32,7 +37,10 @@ router.get('/tasks', auth, async (req, res) => {
         // }
         //res.status(201).send(tasks)
         //alternative
-        await req.user.populate('tasks').execPopulate()
+        await req.user.populate({
+            path: 'tasks',
+            match
+        }).execPopulate()
         res.status(201).send(req.user.tasks)
     }
     catch(error) {
