@@ -65,7 +65,7 @@ userSchema.virtual('tasks', {
 // instance methods, as they work on instance of model
 userSchema.methods.generateAuthToken = async function() {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, 'iamlearningnode')
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
     return token
 }
 
